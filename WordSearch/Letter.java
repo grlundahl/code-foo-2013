@@ -1,92 +1,102 @@
 import java.util.ArrayList;
 public class Letter{
 	private char letter;
-	private ArrayList<Letter> neighborLetters;
+	private ArrayList<Neighbor> neighborLetters = new ArrayList<Neighbor>();
 
 	public Letter(char letter){
 		this.letter = letter;
 	}
 
-	public ArrayList<Letter> getNeighbors(){
+	public ArrayList<Neighbor> getNeighbors(){
 		return neighborLetters;
 	}
 
 	public String toString(){
 		return Character.toString(letter);
 	}
-	
+
+	public char getLetter(){
+		return letter;
+	}
+
 	public void createNeighborList(Board wordSearch, int row, int col){
 		int rSize, cSize;
 		cSize = wordSearch.getLetters().size();
 		rSize = wordSearch.getLetters().get(0).size();
-		
-		for (int r = 0; r < rSize; r++){
-			for (int c = 0; c < cSize; c++){
-				if(r == 0 && c == 0){
-					//top left corner
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c + 1));
-				}else if (r == 0 && c == cSize-1){
-					//top right corner
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c - 1));
-				}else if (r == 0){
-					//top row no corners
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c));
-				}else if (r == rSize - 1 && c == 0){
-					//bottom left corner
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c));
-				}else if (r == rSize - 1 && c == cSize - 1){
-					//bottom right corner
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c));
-				}else if (r == rSize - 1){
-					//bottom row no corners
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c));
-				}else if (c == 0){
-					//left edge no corners
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c));
-					
-				}else if(c == cSize - 1){
-					//right edge no corners
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c));
-				}else{
-					//middle of the board, no edges
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c + 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c - 1));
-					neighborLetters.add(wordSearch.getLetters().get(r - 1).get(c));
-					neighborLetters.add(wordSearch.getLetters().get(r + 1).get(c));
-				}
-			}
+		ArrayList<ArrayList<Letter>> letters = wordSearch.getLetters();
+
+		if(row == 0 && col == 0){
+			//top left corner
+			//System.out.println("1");
+			neighborLetters.add(new Neighbor('r', letters.get(col + 1).get(row)));
+			neighborLetters.add(new Neighbor('d', letters.get(col).get(row + 1)));
+			neighborLetters.add(new Neighbor('c', letters.get(col + 1).get(row + 1)));
+		}else if (row == 0 && col == cSize-1){
+			//top right corner
+			//System.out.println("2");
+			neighborLetters.add(new Neighbor('l', letters.get(col - 1).get(row)));
+			neighborLetters.add(new Neighbor('d', letters.get(col).get(row + 1)));
+			neighborLetters.add(new Neighbor('e', letters.get(col - 1).get(row + 1)));
+		}else if (row == 0){
+			//top row no corners
+			//System.out.println("3");
+			neighborLetters.add(new Neighbor('r', letters.get(col + 1).get(row)));
+			neighborLetters.add(new Neighbor('l', letters.get(col - 1).get(row)));
+			neighborLetters.add(new Neighbor('c', letters.get(col + 1).get(row + 1)));
+			neighborLetters.add(new Neighbor('e', letters.get(col - 1).get(row + 1)));
+			neighborLetters.add(new Neighbor('d', letters.get(col).get(row + 1)));
+		}else if (row == rSize - 1 && col == 0){
+			//bottom left corner
+			//System.out.println("4");
+			neighborLetters.add(new Neighbor('r', letters.get(col + 1).get(row)));
+			neighborLetters.add(new Neighbor('b', letters.get(col + 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('t', letters.get(col).get(row - 1)));
+		}else if (row == rSize - 1 && col == cSize - 1){
+			//bottom right corner
+			//System.out.println("5");
+			neighborLetters.add(new Neighbor('l', letters.get(col - 1).get(row)));
+			neighborLetters.add(new Neighbor('a', letters.get(col - 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('t', letters.get(col).get(row - 1)));
+		}else if (row == rSize - 1){
+			//bottom row no corners
+			//System.out.println("6");
+			neighborLetters.add(new Neighbor('r', letters.get(col + 1).get(row)));
+			neighborLetters.add(new Neighbor('l', letters.get(col - 1).get(row)));
+			neighborLetters.add(new Neighbor('b', letters.get(col + 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('a', letters.get(col - 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('t', letters.get(col).get(row - 1)));
+		}else if (col == 0){
+			//left edge no corners
+			//System.out.println("7");
+			neighborLetters.add(new Neighbor('d', letters.get(col).get(row + 1)));
+			neighborLetters.add(new Neighbor('r', letters.get(col + 1).get(row)));
+			neighborLetters.add(new Neighbor('c', letters.get(col + 1).get(row + 1)));
+			neighborLetters.add(new Neighbor('b', letters.get(col + 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('t', letters.get(col).get(row - 1)));
+		}else if(col == cSize - 1){
+			//right edge no corners
+			//System.out.println("8");
+			neighborLetters.add(new Neighbor('t', letters.get(col).get(row - 1)));
+			neighborLetters.add(new Neighbor('e', letters.get(col - 1).get(row + 1)));
+			neighborLetters.add(new Neighbor('a', letters.get(col - 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('d', letters.get(col).get(row + 1)));
+			neighborLetters.add(new Neighbor('l', letters.get(col - 1).get(row)));
+		}else{
+			//middle of the board, no edges
+			//System.out.println("9");
+			neighborLetters.add(new Neighbor('d', letters.get(col).get(row + 1)));
+			neighborLetters.add(new Neighbor('t', letters.get(col).get(row - 1)));
+			neighborLetters.add(new Neighbor('c', letters.get(col + 1).get(row + 1)));
+			neighborLetters.add(new Neighbor('b', letters.get(col + 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('e', letters.get(col - 1).get(row + 1)));
+			neighborLetters.add(new Neighbor('a', letters.get(col - 1).get(row - 1)));
+			neighborLetters.add(new Neighbor('l', letters.get(col - 1).get(row)));
+			neighborLetters.add(new Neighbor('r', letters.get(col + 1).get(row)));
 		}
-		
-		
-		
+
+
+
+
 		return;
 	}
 }

@@ -13,8 +13,11 @@ public class Board{
 		this.letters = new ArrayList<ArrayList<Letter>>();
 		this.words = new ArrayList<String>();
 		parseBoard();
-		System.out.println(letters);
-		System.out.println(words);
+		for (int i = 0; i < words.size(); i++){
+			if (words.get(i).isEmpty()){
+				words.remove(words.get(i));
+			}
+		}
 		createNeighbors(this);
 	}
 
@@ -39,7 +42,7 @@ public class Board{
 			int ch = fileRead.read();
 			while (ch != -1 ){
 				if (isWords){
-					if((char)ch == ' '){
+					if(ch == 32){
 						break;
 					}else{
 						String word = new String();
@@ -47,10 +50,11 @@ public class Board{
 							word += Character.toString((char)ch);
 							ch = fileRead.read();
 						}
+						ch = fileRead.read();
 						words.add(word);
 					}
 				}else{
-					if ((char)ch == ' '){
+					if (ch == 10){
 						isWords = true;
 					}else{
 						ArrayList<Letter> line = new ArrayList<Letter>();
@@ -60,7 +64,9 @@ public class Board{
 								// is not a tab
 								line.add(new Letter((char)ch));
 							}
+							ch = fileRead.read();
 						}
+						ch = fileRead.read();
 						letters.add(line);
 					}
 				}
@@ -71,10 +77,11 @@ public class Board{
 
 		try {
 			fileRead.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e){ 
 			e.printStackTrace();
 		}
+		words.remove("Words to find:");
+		words.remove(null);
 
 		return;
 	}
@@ -83,16 +90,21 @@ public class Board{
 		return letters;
 	}
 
+	public ArrayList<String> getWords(){
+		return words;
+	}
+
 	public static void createNeighbors(Board wordSearch){
 		int r, c;
 		r = 0;
 		c = 0;
 		for(ArrayList<Letter> line : wordSearch.letters){
 			for (Letter character: line){
-				character.createNeighborList(wordSearch, r, c);
+				character.createNeighborList(wordSearch, c, r);
 				c++;
 			}
 			r++;
+			c = 0;
 		}
 	}
 
