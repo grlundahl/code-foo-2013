@@ -1,49 +1,24 @@
 import java.util.ArrayList;
-/**
- *@author Greg Lundahl
- */
 public class Letter{
 	private char letter;
 	private ArrayList<Neighbor> neighborLetters = new ArrayList<Neighbor>();
 
-	/**
-	 *Constructor of the Letter class
-	 * @param char
-	 */
 	public Letter(char letter){
 		this.letter = letter;
 	}
 
-	/**
-	 * Returns the ArrayList of Neighbors for the letter
-	 * @return ArrayList<Neighbor>
-	 */
 	public ArrayList<Neighbor> getNeighbors(){
 		return neighborLetters;
 	}
 
-	/**
-	 *Returns a String representation of the Letter
-	 * @return String
-	 */
 	public String toString(){
 		return Character.toString(letter);
 	}
 
-	/**
-	 * returns the letter of the Letter
-	 * @return char
-	 */
 	public char getLetter(){
 		return letter;
 	}
 
-	/**
-	 *Creates the neighbor list for the individual Letter
-	 *@param Board 
-	 *@param int
-	 *@param int
-	 */
 	public void createNeighborList(Board wordSearch, int row, int col){
 		int rSize, cSize;
 		cSize = wordSearch.getLetters().size();
@@ -118,6 +93,10 @@ public class Letter{
 			neighborLetters.add(new Neighbor('l', letters.get(col - 1).get(row)));
 			neighborLetters.add(new Neighbor('r', letters.get(col + 1).get(row)));
 		}
+
+
+
+
 		return;
 	}
 }

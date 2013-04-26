@@ -4,17 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * @author Greg Lundahl
- */
 public class Board{
 	private ArrayList<ArrayList<Letter>> letters;
 	private ArrayList<String> words;
 	private Scanner in = new Scanner(System.in);
 
-	/**
-	 * Constructor for the Board Class
-	 */
 	public Board(){
 		this.letters = new ArrayList<ArrayList<Letter>>();
 		this.words = new ArrayList<String>();
@@ -27,9 +21,6 @@ public class Board{
 		createNeighbors(this);
 	}
 
-	/**
-	 * Parses the Board from the input file given by the user
-	 */
 	public void parseBoard(){
 		String fileName;
 		FileReader fileRead;
@@ -90,29 +81,19 @@ public class Board{
 			e.printStackTrace();
 		}
 		words.remove("Words to find:");
+		words.remove(null);
 
 		return;
 	}
 
-	/**
-	 * Returns the 2-d ArrayList of Letter's
-	 * @return ArrayList<ArrayList<Letter>> letters
-	 */
 	public ArrayList<ArrayList<Letter>> getLetters(){
 		return letters;
 	}
 
-	/**
-	 * Returns an ArrayList of Strings containing the words to be found
-	 * @return ArrayList<String>
-	 */
 	public ArrayList<String> getWords(){
 		return words;
 	}
 
-	/**
-	 * Creates neighbors for the letters on the board
-	 */
 	public static void createNeighbors(Board wordSearch){
 		int r, c;
 		r = 0;
