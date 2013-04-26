@@ -1,0 +1,7 @@
+The algorithm that I used was MergeSort. 
+
+It's worst case time complexity is nLog(n). It's best case is also nLog(n). Using other algorithms you could get a faster
+best case but you would be sacrificing the time complexity of the worst case.
+
+In terms of space, you could use other algorithms that use less space but are slower in terms of time complexity or
+you could used a HeapSort, which is not a stable sorting algorithm. 
