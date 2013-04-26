@@ -1,8 +1,15 @@
 import java.util.ArrayList;
 
+/**
+ *@author Greg Lundahl
+ */
 public class WordSearch{
 	private static Board theBoard;
 	
+	/**
+	 *Main function
+	 *@param String[]
+	 */
 	public static void main(String[] args){
 		theBoard = new Board();
 		for(String word: theBoard.getWords()){
@@ -10,6 +17,11 @@ public class WordSearch{
 		}
 	}
 
+	/**
+	 * Function to find the given word in the given Board
+	 * @param String
+	 * @param Board
+	 */
 	public static void findWord(String word, Board theBoard){
 		ArrayList<ArrayList<Letter>> letters = theBoard.getLetters();
 		for (int c = 0; c < letters.size(); c++){
@@ -17,13 +29,19 @@ public class WordSearch{
 				//System.out.println(word.charAt(0) + " " + letters.get(c).get(r).getLetter());
 				if(Character.toLowerCase(word.charAt(0)) == letters.get(c).get(r).getLetter()){
 					if(trace(letters.get(c).get(r), word, theBoard)){
-						System.out.println("starting at row  " + (c+1) + " and column " + (r+1));
+						System.out.println(word + " starts at row  " + (c+1) + " and column " + (r+1));
 					}
 				}
 			}
 		}
 	}
 
+	/**
+	 * Traces a path to see if there is a complete word on the Board
+	 * @param Letter
+	 * @param String
+	 * @param Board
+	 */
 	public static boolean trace(Letter let, String word, Board theBoard){
 		Letter current = let;
 		char dir = ' ';
@@ -57,23 +75,6 @@ public class WordSearch{
 			if (!hasNeighbor){
 				return false;
 			}
-		}
-		if(dir == 'a'){
-			System.out.print(word + " goes towards the top left ");
-		}else if(dir == 't'){
-			System.out.print(word + " goes towards the top ");
-		}else if(dir == 'b'){
-			System.out.print(word + " goes towards the top right ");
-		}else if(dir == 'r'){
-			System.out.print(word + " goes towards the right ");
-		}else if(dir == 'c'){
-			System.out.print(word + " goes towards the bottom right ");
-		}else if(dir == 'd'){
-			System.out.print(word + " goes towards the bottom ");
-		}else if(dir == 'e'){
-			System.out.print(word + " goes towards the bottom left ");
-		}else{
-			System.out.print(word + " goes towards the left ");
 		}
 		return true;
 	}
